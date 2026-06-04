@@ -1,0 +1,112 @@
+---
+aid: ucb
+name: University of California, Berkeley
+description: >-
+  The University of California, Berkeley (UC Berkeley) is a public land-grant
+  research university and the flagship campus of the University of California
+  system, ranked #12 in the QS World University Rankings 2025. Berkeley operates
+  a formal, centrally governed API program through its Integration Services /
+  Enterprise Information Services team, exposing campus data via the API Central
+  developer portal and a shared API Gateway. Access is gated behind CalNet
+  identity and Data Owner approval, with interactive OpenAPI-based documentation
+  and gateway-level authentication, authorization, and rate limiting. Public,
+  uncredentialed footprint also includes the UC-wide eScholarship repository
+  APIs/OAI-PMH and library Alma/Primo metadata services.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/ucb/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research
+  - Open Data
+  - United States
+  - California
+apis:
+  - aid: ucb:api-central
+    name: API Central (Developer Portal)
+    description: >-
+      Berkeley's centralized API management developer portal where developers
+      browse and search published campus APIs, read interactive OpenAPI-based
+      documentation with a "Try it out" feature, and request access credentials.
+      Login and access require a CalNet identity and Data Owner approval via
+      ServiceNow.
+    humanURL: https://developers.api.berkeley.edu/
+    tags: [ API Management, Developer Portal, OpenAPI, Authentication ]
+    properties:
+      - type: Documentation
+        url: https://integration-services.berkeley.edu/api-management/developer-portal-api-central
+      - type: SignUp
+        url: https://developers.api.berkeley.edu/
+  - aid: ucb:api-gateway
+    name: UC Berkeley API Gateway
+    description: >-
+      The single, centralized entry point for API requests across the Berkeley
+      campus. The gateway centralizes functions common to all campus APIs,
+      including load balancing, authentication, authorization, and rate
+      limiting. Individual API endpoints are exposed and discovered through
+      API Central.
+    humanURL: https://integration-services.berkeley.edu/api-management/api-gateway
+    baseURL: https://gateway.api.berkeley.edu/
+    tags: [ API Gateway, Authentication, Rate Limiting ]
+    properties:
+      - type: Documentation
+        url: https://integration-services.berkeley.edu/api-management/api-gateway
+  - aid: ucb:escholarship
+    name: eScholarship Repository API (OAI-PMH)
+    description: >-
+      The University of California's open-access publishing and institutional
+      repository (which includes UC Berkeley scholarship) exposes a public,
+      uncredentialed read API and an OAI-PMH interface for harvesting metadata
+      and content records, alongside RSS/Atom and KBART feeds.
+    humanURL: https://help.escholarship.org/support/solutions/articles/9000223035-about-escholarship-apis
+    baseURL: https://www.escholarship.org/oai
+    tags: [ Repository, OAI-PMH, Open Access, Research ]
+    properties:
+      - type: Documentation
+        url: https://help.escholarship.org/support/solutions/articles/9000223035-about-escholarship-apis
+      - type: Documentation
+        url: https://help.escholarship.org/support/solutions/articles/9000133474-using-the-oai-pmh-interface
+  - aid: ucb:library-alma
+    name: UC Berkeley Library Alma/Primo Integrations
+    description: >-
+      The UC Berkeley Library runs the Ex Libris Alma/Primo platform for
+      collection management and discovery, exposing metadata via the Alma
+      OAI-PMH provider and Primo discovery. The library maintains public
+      open-source Alma/Primo utilities on GitHub.
+    humanURL: https://github.com/BerkeleyLibrary/alma
+    tags: [ Library, Alma, Primo, OAI-PMH, Metadata ]
+    properties:
+      - type: Documentation
+        url: https://github.com/BerkeleyLibrary/alma
+      - type: GitHub
+        url: https://github.com/BerkeleyLibrary
+common:
+  - type: Website
+    url: https://www.berkeley.edu/
+  - type: DeveloperPortal
+    url: https://developers.api.berkeley.edu/
+  - type: GitHub
+    url: https://github.com/ucberkeley
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/uc-berkeley/
+  - type: Status
+    url: https://systemstatus.berkeley.edu/
+  - type: Twitter
+    url: https://twitter.com/UCBerkeley
+  - type: Authentication
+    url: https://integration-services.berkeley.edu/api-management/developer-portal-api-central
+  - type: Plans
+    url: plans/ucb-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/ucb-rate-limits.yml
+  - type: FinOps
+    url: finops/ucb-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

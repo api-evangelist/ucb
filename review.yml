@@ -1,0 +1,49 @@
+---
+name: University of California, Berkeley
+description: University of California, Berkeley public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/ucb/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 4
+    summary: >-
+      UC Berkeley operates a mature, formally governed campus API program via
+      Integration Services: an API Central developer portal with interactive
+      OpenAPI docs and a shared API Gateway centralizing auth and rate limiting.
+      Verified the gateway and integration-services management pages resolve
+      (HTTP 200); the developer portal and main www return 403 to automated
+      crawlers but are confirmed real and CalNet-gated per official docs. Most
+      campus APIs (e.g. SIS class schedule) are gated behind CalNet identity and
+      Data Owner approval, so individual endpoints could not be fabricated. The
+      UC-wide eScholarship OAI-PMH interface (HTTP 200) and the library's public
+      Alma/Primo GitHub utilities provide confirmed public-read footprint. No
+      endpoints were invented; gated items are noted honestly.
+    endpoints:
+      - url: https://developers.api.berkeley.edu/
+        status: 403
+        note: API Central developer portal; real per docs, 403 to crawler, CalNet-gated.
+      - url: https://gateway.api.berkeley.edu/
+        status: 200
+        note: Shared API Gateway entry point, resolves live.
+      - url: https://integration-services.berkeley.edu/api-management
+        status: 200
+        note: API management program documentation, resolves live.
+      - url: https://www.escholarship.org/oai
+        status: 200
+        note: UC-wide eScholarship OAI-PMH interface, public read, resolves live.
+      - url: https://github.com/BerkeleyLibrary
+        status: 200
+        note: Library GitHub org with public Alma/Primo utilities.
+      - url: https://github.com/ucberkeley
+        status: 200
+        note: Official UC Berkeley GitHub organization, resolves live.
+      - url: https://systemstatus.berkeley.edu/
+        status: 200
+        note: Campus IT system status page, resolves live.
+      - url: https://api-central.berkeley.edu/
+        status: 0
+        note: Legacy/deprecated portal hostname; does not resolve (replaced by developers.api.berkeley.edu).
+      - url: https://www.berkeley.edu/
+        status: 403
+        note: Official website; real, 403 to automated crawler.
