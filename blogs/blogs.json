@@ -1,0 +1,14 @@
+{
+  "repo": "ucb",
+  "feeds": [
+    {
+      "source": "https://integration-services.berkeley.edu/",
+      "feed_url": "https://integration-services.berkeley.edu/api-management",
+      "title": "UC Berkeley Integration Services / API Management",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-03T00:00:00Z"
+}

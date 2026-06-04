@@ -1,0 +1,66 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "ucb": "https://www.berkeley.edu/ns#",
+    "name": "name",
+    "url": "url",
+    "description": "description",
+    "sameAs": "sameAs",
+    "CollegeOrUniversity": "CollegeOrUniversity",
+    "EducationalOrganization": "EducationalOrganization",
+    "api": {
+      "@id": "ucb:api",
+      "@container": "@set"
+    },
+    "humanURL": {
+      "@id": "ucb:humanURL",
+      "@type": "@id"
+    },
+    "baseURL": {
+      "@id": "ucb:baseURL",
+      "@type": "@id"
+    },
+    "documentation": {
+      "@id": "ucb:documentation",
+      "@type": "@id"
+    }
+  },
+  "@type": "CollegeOrUniversity",
+  "name": "University of California, Berkeley",
+  "url": "https://www.berkeley.edu/",
+  "description": "Public land-grant research university and flagship campus of the University of California system, operating a centrally governed API program via the API Central developer portal and a shared API Gateway.",
+  "sameAs": [
+    "https://en.wikipedia.org/wiki/University_of_California,_Berkeley",
+    "https://www.linkedin.com/school/uc-berkeley/",
+    "https://twitter.com/UCBerkeley",
+    "https://github.com/ucberkeley"
+  ],
+  "api": [
+    {
+      "@type": "WebAPI",
+      "name": "API Central (Developer Portal)",
+      "humanURL": "https://developers.api.berkeley.edu/",
+      "documentation": "https://integration-services.berkeley.edu/api-management/developer-portal-api-central"
+    },
+    {
+      "@type": "WebAPI",
+      "name": "UC Berkeley API Gateway",
+      "humanURL": "https://integration-services.berkeley.edu/api-management/api-gateway",
+      "baseURL": "https://gateway.api.berkeley.edu/",
+      "documentation": "https://integration-services.berkeley.edu/api-management/api-gateway"
+    },
+    {
+      "@type": "WebAPI",
+      "name": "eScholarship Repository API (OAI-PMH)",
+      "humanURL": "https://help.escholarship.org/support/solutions/articles/9000223035-about-escholarship-apis",
+      "baseURL": "https://www.escholarship.org/oai",
+      "documentation": "https://help.escholarship.org/support/solutions/articles/9000133474-using-the-oai-pmh-interface"
+    },
+    {
+      "@type": "WebAPI",
+      "name": "UC Berkeley Library Alma/Primo Integrations",
+      "humanURL": "https://github.com/BerkeleyLibrary/alma",
+      "documentation": "https://github.com/BerkeleyLibrary/alma"
+    }
+  ]
+}
