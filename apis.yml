@@ -39,7 +39,7 @@ apis:
     properties:
       - type: Documentation
         url: https://integration-services.berkeley.edu/api-management/developer-portal-api-central
-      - type: SignUp
+      - type: Signup
         url: https://developers.api.berkeley.edu/
   - aid: ucb:api-gateway
     name: UC Berkeley API Gateway
