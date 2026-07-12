@@ -1,0 +1,27 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.berkeley.edu
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 14 20:03:09 2026 GMT
+  hsts: false
+- host: developers.api.berkeley.edu
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 30 23:59:59 2026 GMT
+  hsts: null
+- host: integration-services.berkeley.edu
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 29 20:14:07 2026 GMT
+  hsts: true
+  hsts_max_age: 15552000
+domains:
+- domain: berkeley.edu
+  dnssec: true
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject

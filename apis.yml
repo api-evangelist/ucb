@@ -85,6 +85,8 @@ apis:
       - type: GitHub
         url: https://github.com/BerkeleyLibrary
 common:
+  - type: DomainSecurity
+    url: security/ucb-domain-security.yml
   - type: Website
     url: https://www.berkeley.edu/
   - type: DeveloperPortal
