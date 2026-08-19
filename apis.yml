@@ -1,119 +1,353 @@
 ---
 aid: ucb
 name: University of California, Berkeley
+x-type: university
+x-category: Public Research University
 description: >-
-  The University of California, Berkeley (UC Berkeley) is a public land-grant
-  research university and the flagship campus of the University of California
-  system, ranked #12 in the QS World University Rankings 2025. Berkeley operates
-  a formal, centrally governed API program through its Integration Services /
-  Enterprise Information Services team, exposing campus data via the API Central
-  developer portal and a shared API Gateway. Access is gated behind CalNet
-  identity and Data Owner approval, with interactive OpenAPI-based documentation
-  and gateway-level authentication, authorization, and rate limiting. Public,
-  uncredentialed footprint also includes the UC-wide eScholarship repository
-  APIs/OAI-PMH and library Alma/Primo metadata services.
+  The University of California, Berkeley is a public land-grant research university and
+  the founding campus of the University of California system. Berkeley is one of the few
+  universities in this cohort that genuinely operates its own API program rather than
+  merely appearing to: Berkeley IT's Engineering and Integration Services team runs an
+  API Central developer portal and a shared API Gateway on Berkeley's own infrastructure,
+  publishing a public catalog of roughly 28 campus APIs across Student Information, HR,
+  finance and identity, each listed with its UC data classification (P1/P2/P3) and a named
+  Data Owner. That program is real, but it is internal-first: the catalog is public and the
+  contracts are not. No OpenAPI definition is retrievable without a CalNet identity and
+  Data Owner approval, so this profile holds ZERO OpenAPI documents and that is the
+  accurate measurement, not a gap in the research. What Berkeley does publish without
+  credentials is narrower and mostly overlooked: a complete Shibboleth/SAML 2.0 identity
+  provider metadata document at shib.berkeley.edu (InCommon entity
+  urn:mace:incommon:berkeley.edu), a live GeoBlacklight JSON catalog of 5,156 geospatial
+  datasets at geodata.lib.berkeley.edu, and a gated but well-formed research-computing API
+  for the Savio cluster's access management system. Its research repositories are not its
+  engineering: the Digital Collections OAI-PMH endpoint runs on TIND, and eScholarship is a
+  California Digital Library service for the entire UC system. Both are recorded here as
+  tenant relationships, not as Berkeley contracts.
 type: Index
 specificationVersion: '0.23'
+created: '2026-06-03'
+modified: '2026-08-19'
 accessModel:
   pricing: free
-  onboarding: unknown
+  onboarding: gated
   trial: false
   try_now: false
   public: false
-  label: Free
-  confidence: medium
+  label: Free / Affiliation-Gated
+  confidence: high
   source:
   - plans
-  generated: '2026-07-22'
-  method: derived
+  - authentication
+  generated: '2026-08-19'
+  method: probed
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ucb.png
 url: https://raw.githubusercontent.com/api-evangelist/ucb/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
   - University
-  - Research
-  - Open Data
+  - Higher Education
+  - Education
+  - Public Research University
   - United States
   - California
+  - UC System
+  - Research
+  - Identity Federation
+  - Research Repository
+  - Research Computing
+  - Course Catalog
+  - Library
+  - Open Data
+  - Geospatial Data
+  - OAI-PMH
+
+x-coverage:
+  state: gated
+  reason: contracts_behind_authentication
+  detail: >-
+    UC Berkeley operates a real, centrally governed API program with a publicly readable
+    catalog of roughly 28 campus APIs, but every contract in it is behind CalNet SSO plus
+    Data Owner approval. developers.api.berkeley.edu/apis returns 200 to an anonymous
+    client and lists every API's name, description, data classification and owning
+    organization; no API's interactive documentation or OpenAPI definition is reachable
+    without a CalNet identity. This profile therefore holds no OpenAPI, no JSON Schema and
+    no examples, and none were generated, because generating them would credit Berkeley
+    with contracts it has not published. Three institution-operated machine-readable
+    surfaces WERE found and verified by protocol response rather than by link presence:
+    the CalNet Shibboleth/SAML IdP metadata, the library's GeoBlacklight JSON catalog, and
+    the MyBRC research-computing API (401 JSON). Two repository surfaces were found and
+    are recorded as TENANT rather than as Berkeley contracts. Berkeleytime
+    (berkeleytime.com), the well-known student-built Berkeley course-data API, was probed
+    and is live behind a Cloudflare challenge, but it runs on a non-institution domain
+    under the ASUC student association and no evidence of University endorsement or
+    operation was found, so it is deliberately NOT credited to Berkeley here.
+  generated: '2026-08-19'
+  method: probed
+  evidence:
+    - url: https://developers.api.berkeley.edu/apis
+      status: 200
+    - url: https://developers.api.berkeley.edu/api/6
+      status: 200
+    - url: https://developers.api.berkeley.edu/terms_of_service
+      status: 200
+    - url: https://gateway.api.berkeley.edu/
+      status: 200
+    - url: https://shib.berkeley.edu/idp/shibboleth
+      status: 200
+    - url: https://geodata.lib.berkeley.edu/catalog.json?q=water
+      status: 200
+    - url: https://mybrc.brc.berkeley.edu/api/
+      status: 401
+    - url: https://digicoll.lib.berkeley.edu/oai2d?verb=Identify
+      status: 200
+    - url: https://escholarship.org/oai?verb=Identify
+      status: 200
+    - url: https://na01.alma.exlibrisgroup.com/view/oai/01UCS_BER/request?verb=Identify
+      status: 200
+      note: Responds "Institution code 01UCS_BER is invalid" -- no Berkeley Alma OAI provider.
+    - url: https://www.berkeley.edu/.well-known/security.txt
+      status: 404
+    - url: https://www.berkeley.edu/llms.txt
+      status: 404
+    - url: https://berkeleytime.com/
+      status: 403
+      note: Cloudflare challenge; live but student-run, not institution-operated.
+
 apis:
   - aid: ucb:api-central
     name: API Central (Developer Portal)
+    x-operator: institution
     description: >-
-      Berkeley's centralized API management developer portal where developers
-      browse and search published campus APIs, read interactive OpenAPI-based
-      documentation with a "Try it out" feature, and request access credentials.
-      Login and access require a CalNet identity and Data Owner approval via
-      ServiceNow.
+      Berkeley IT's centralized API management developer portal, operated by the
+      Engineering and Integration Services (EIS) team. The catalog itself is public: an
+      anonymous client can read all roughly 28 published campus APIs grouped by category
+      (Student Information, UCB Administration, API and Integration Tools) and by Data
+      Owner (SIS, UCB Human Resources, Berkeley Financial System, CalNet Identity and
+      Access Management, and others), with each API's description, its UC data
+      classification rating and its owning organization's contact address. Interactive
+      OpenAPI documentation, access plans and credentials all require CalNet login and
+      Data Owner approval, so no contract document is publicly retrievable.
     humanURL: https://developers.api.berkeley.edu/
-    tags: [ API Management, Developer Portal, OpenAPI, Authentication ]
+    baseURL: https://developers.api.berkeley.edu/
+    tags: [ API Management, Developer Portal, API Catalog, Authentication ]
     properties:
+      - type: APIReference
+        url: https://developers.api.berkeley.edu/apis
       - type: Documentation
         url: https://integration-services.berkeley.edu/api-management/developer-portal-api-central
-      - type: Signup
-        url: https://developers.api.berkeley.edu/
+      - type: TermsOfService
+        url: https://developers.api.berkeley.edu/terms_of_service
+      - type: Support
+        url: https://developers.api.berkeley.edu/contact_us
+      - type: Authentication
+        url: authentication/ucb-authentication.yml
+
   - aid: ucb:api-gateway
     name: UC Berkeley API Gateway
+    x-operator: institution
     description: >-
-      The single, centralized entry point for API requests across the Berkeley
-      campus. The gateway centralizes functions common to all campus APIs,
-      including load balancing, authentication, authorization, and rate
-      limiting. Individual API endpoints are exposed and discovered through
-      API Central.
+      The single centralized entry point for API requests across the Berkeley campus,
+      operated by Berkeley IT on Berkeley's own CloudFront distribution. The gateway
+      obfuscates the internal workings and physical host of each source system from
+      clients and centralizes load balancing, authentication, authorization and rate
+      limiting. Individual endpoints are discovered through API Central; the gateway root
+      serves an explanatory page rather than a machine-readable index.
     humanURL: https://integration-services.berkeley.edu/api-management/api-gateway
     baseURL: https://gateway.api.berkeley.edu/
     tags: [ API Gateway, Authentication, Rate Limiting ]
     properties:
       - type: Documentation
         url: https://integration-services.berkeley.edu/api-management/api-gateway
-  - aid: ucb:escholarship
-    name: eScholarship Repository API (OAI-PMH)
+      - type: RateLimits
+        url: rate-limits/ucb-rate-limits.yml
+
+  - aid: ucb:calnet-shibboleth
+    name: CalNet Shibboleth Identity Provider (SAML 2.0 Metadata)
+    x-operator: institution
     description: >-
-      The University of California's open-access publishing and institutional
-      repository (which includes UC Berkeley scholarship) exposes a public,
-      uncredentialed read API and an OAI-PMH interface for harvesting metadata
-      and content records, alongside RSS/Atom and KBART feeds.
-    humanURL: https://help.escholarship.org/support/solutions/articles/9000223035-about-escholarship-apis
-    baseURL: https://www.escholarship.org/oai
-    tags: [ Repository, OAI-PMH, Open Access, Research ]
+      UC Berkeley's Shibboleth identity provider, operated by IST-CalNet, publishes a
+      complete unauthenticated SAML 2.0 metadata document describing how any service
+      provider federates with the institution. The EntityDescriptor carries entityID
+      urn:mace:incommon:berkeley.edu, a shibmd:Scope of berkeley.edu, an IDPSSODescriptor
+      supporting Shibboleth 1.0, SAML 1.1 and SAML 2.0 with HTTP-POST, HTTP-Redirect and
+      HTTP-POST-SimpleSign bindings, SingleLogoutService endpoints, and an
+      AttributeAuthorityDescriptor exposing SAML1 and SAML2 SOAP AttributeQuery services.
+      The signing certificate is issued to O=UC Berkeley, OU=IST-Calnet. Berkeley's entry
+      is also served by InCommon's MDQ service as a signed entity, confirming active
+      federation and eduGAIN reach. This is the most substantial machine-readable artifact
+      the institution publishes to an anonymous caller.
+    humanURL: https://calnet.berkeley.edu/
+    baseURL: https://shib.berkeley.edu/idp/shibboleth
+    tags: [ Identity Federation, SAML, Shibboleth, InCommon, Authentication ]
     properties:
+      - type: IdentityFederation
+        url: https://shib.berkeley.edu/idp/shibboleth
       - type: Documentation
-        url: https://help.escholarship.org/support/solutions/articles/9000223035-about-escholarship-apis
+        url: https://calnet.berkeley.edu/
+      - type: Conformance
+        url: conformance/ucb-education-standards-conformance.yml
+
+  - aid: ucb:geodata
+    name: UC Berkeley Library GeoData (GeoBlacklight) Catalog API
+    x-operator: institution
+    description: >-
+      The UC Berkeley Library's GIS and map discovery application, built and hosted by the
+      Library itself (the application source is public at BerkeleyLibrary/geodata and the
+      host resolves inside Berkeley's own network to nginx-prod.lib.berkeley.edu). Its
+      Blacklight JSON interface answers anonymous requests at /catalog.json with a
+      paginated JSON:API-shaped response over 5,156 geospatial dataset records described in
+      OpenGeoMetadata Aardvark fields. This is the only Berkeley-operated API that returns
+      institutional data to a caller with no credentials at all. No OpenAPI is published
+      for it and none was generated.
+    humanURL: https://geodata.lib.berkeley.edu/
+    baseURL: https://geodata.lib.berkeley.edu/catalog.json
+    tags: [ Open Data, Geospatial Data, Library, Discovery, GeoBlacklight ]
+    properties:
+      - type: OpenData
+        url: https://geodata.lib.berkeley.edu/
+      - type: GitHub
+        url: https://github.com/BerkeleyLibrary/geodata
+
+  - aid: ucb:mybrc
+    name: MyBRC Cluster Access Management API
+    x-operator: institution
+    description: >-
+      Berkeley Research Computing's cluster access management system, which handles
+      allocations, project membership and access requests for the Savio high-performance
+      computing cluster. The host resolves to Berkeley's own address space and the API
+      answers an unauthenticated request with a well-formed JSON 401 rather than a login
+      redirect, which is what distinguishes it from a web application. No schema or
+      interactive documentation is served publicly. This is the research-computing surface
+      class that universities genuinely operate and rarely publish.
+    humanURL: https://mybrc.brc.berkeley.edu/
+    baseURL: https://mybrc.brc.berkeley.edu/api/
+    tags: [ Research Computing, HPC, Allocations, Authentication ]
+    properties:
+      - type: ResearchComputing
+        url: https://research-it.berkeley.edu/services-projects/high-performance-computing-savio
+      - type: Documentation
+        url: https://research-it.berkeley.edu/
+
+  - aid: ucb:digicoll-oai
+    name: UC Berkeley Digital Collections OAI-PMH (TIND tenant)
+    x-operator: tenant
+    x-vendor: TIND
+    description: >-
+      Berkeley's Digital Collections repository exposes a live OAI-PMH 2.0 interface,
+      confirmed with an actual verb=Identify response reporting repositoryName "Digital
+      Collections", repositoryIdentifier digicoll.lib.berkeley.edu and adminEmail
+      digicoll@berkeley.edu, with named collection sets available via ListSets. The
+      metadata, the collections and the administrative contact are Berkeley's; the software
+      and the protocol implementation are not. digicoll.lib.berkeley.edu CNAMEs to
+      berkeley.lb.service.tind.io, making this a Berkeley-specific tenancy on TIND's
+      platform. Recorded as a tenant relationship: the repository is a real institutional
+      fact and one of Berkeley's few programmable surfaces, but the contract belongs to
+      TIND and is not saved under this institution.
+    humanURL: https://digicoll.lib.berkeley.edu/
+    baseURL: https://digicoll.lib.berkeley.edu/oai2d
+    tags: [ Research Repository, Digital Collections, OAI-PMH, Library, TIND ]
+    properties:
+      - type: ResearchRepository
+        url: https://digicoll.lib.berkeley.edu/oai2d?verb=Identify
+      - type: GitHub
+        url: https://github.com/BerkeleyLibrary/python-tind-client
+
+  - aid: ucb:escholarship
+    name: eScholarship Repository and OAI-PMH (California Digital Library tenant)
+    x-operator: tenant
+    x-vendor: California Digital Library (University of California)
+    description: >-
+      eScholarship is the University of California's open-access publishing platform and
+      institutional repository, operated system-wide by the California Digital Library, not
+      by the Berkeley campus. Its OAI-PMH interface is live and was confirmed with
+      verb=Identify (repositoryIdentifier escholarship.org, adminEmail
+      help@escholarship.org). ListSets returns a single set, "everything" -- there is no
+      Berkeley-scoped OAI set, which is precisely why this cannot be attributed to Berkeley
+      as its own contract. Berkeley scholarship is deposited into it and surfaced under the
+      unit path /uc/ucb. Recorded as a tenant relationship on a sibling UC service.
+    humanURL: https://help.escholarship.org/support/solutions/articles/9000223035-about-escholarship-apis
+    baseURL: https://escholarship.org/oai
+    tags: [ Research Repository, Open Access, OAI-PMH, Scholarly Communication ]
+    properties:
+      - type: ResearchRepository
+        url: https://escholarship.org/oai?verb=Identify
       - type: Documentation
         url: https://help.escholarship.org/support/solutions/articles/9000133474-using-the-oai-pmh-interface
-  - aid: ucb:library-alma
-    name: UC Berkeley Library Alma/Primo Integrations
+
+  - aid: ucb:library-search
+    name: UC Library Search / Primo VE Discovery (Ex Libris tenant)
+    x-operator: tenant
+    x-vendor: Ex Libris (Clarivate)
     description: >-
-      The UC Berkeley Library runs the Ex Libris Alma/Primo platform for
-      collection management and discovery, exposing metadata via the Alma
-      OAI-PMH provider and Primo discovery. The library maintains public
-      open-source Alma/Primo utilities on GitHub.
-    humanURL: https://github.com/BerkeleyLibrary/alma
-    tags: [ Library, Alma, Primo, OAI-PMH, Metadata ]
+      Library discovery for the Berkeley campus runs on Ex Libris Primo VE as part of the
+      shared UC Library Search environment. search.library.berkeley.edu is a Berkeley-branded
+      hostname that CNAMEs to berkeley.primo.exlibrisgroup.com and then to
+      na07.primo.exlibrisgroup.com, with a Berkeley view code of 01UCS_BER:UCB. No
+      Berkeley-operated Alma OAI provider exists -- probing the Alma OAI endpoint with the
+      Berkeley view code returns "Institution code 01UCS_BER is invalid", confirming the
+      institution is a view inside a UC-wide network zone rather than the operator of its
+      own Alma instance. The Library does publish its own open-source Alma and Primo
+      tooling on GitHub. Recorded as a tenant relationship; no vendor contract saved here.
+    humanURL: https://search.library.berkeley.edu/discovery/search?vid=01UCS_BER:UCB
+    tags: [ Library, Discovery, Primo, Alma, Metadata ]
     properties:
-      - type: Documentation
-        url: https://github.com/BerkeleyLibrary/alma
+      - type: LibraryCatalog
+        url: https://search.library.berkeley.edu/discovery/search?vid=01UCS_BER:UCB
       - type: GitHub
-        url: https://github.com/BerkeleyLibrary
+        url: https://github.com/BerkeleyLibrary/alma
+
 common:
-  - type: DomainSecurity
-    url: security/ucb-domain-security.yml
   - type: Website
     url: https://www.berkeley.edu/
   - type: DeveloperPortal
     url: https://developers.api.berkeley.edu/
-  - type: GitHub
-    url: https://github.com/ucberkeley
-  - type: LinkedIn
-    url: https://www.linkedin.com/school/uc-berkeley/
+  - type: APIReference
+    url: https://developers.api.berkeley.edu/apis
+  - type: Documentation
+    url: https://integration-services.berkeley.edu/api-management/developer-portal-api-central
+  - type: TermsOfService
+    url: https://developers.api.berkeley.edu/terms_of_service
+  - type: PrivacyPolicy
+    url: https://www.berkeley.edu/privacy-policy/
+  - type: Support
+    url: https://developers.api.berkeley.edu/contact_us
   - type: Status
     url: https://systemstatus.berkeley.edu/
+  - type: IdentityFederation
+    url: https://shib.berkeley.edu/idp/shibboleth
+  - type: OpenData
+    url: https://geodata.lib.berkeley.edu/
+  - type: ResearchRepository
+    url: https://digicoll.lib.berkeley.edu/oai2d?verb=Identify
+  - type: LibraryCatalog
+    url: https://search.library.berkeley.edu/discovery/search?vid=01UCS_BER:UCB
+  - type: CourseCatalog
+    url: https://classes.berkeley.edu/
+  - type: ResearchComputing
+    url: https://research-it.berkeley.edu/services-projects/high-performance-computing-savio
+  - type: AIPolicy
+    url: https://ai.berkeley.edu/guidance
+  - type: AITooling
+    url: https://ai.berkeley.edu/tools-training
+  - type: GitHubOrganization
+    url: https://github.com/ucberkeley
+  - type: GitHubOrganization
+    url: https://github.com/BerkeleyLibrary
+  - type: GitHubOrganization
+    url: https://github.com/ets-berkeley-edu
+  - type: SecurityPolicy
+    url: https://security.berkeley.edu/
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/uc-berkeley/
   - type: Twitter
-    url: https://twitter.com/UCBerkeley
+    url: https://x.com/UCBerkeley
   - type: Authentication
-    url: https://integration-services.berkeley.edu/api-management/developer-portal-api-central
+    url: authentication/ucb-authentication.yml
+  - type: Conformance
+    url: conformance/ucb-education-standards-conformance.yml
+  - type: DomainSecurity
+    url: security/ucb-domain-security.yml
   - type: Plans
     url: plans/ucb-plans-pricing.yml
   - type: RateLimits
