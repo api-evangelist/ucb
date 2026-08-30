@@ -1,0 +1,163 @@
+specification: API Commons Conformance
+specificationVersion: '0.1'
+provider: University of California, Berkeley
+providerId: ucb
+regime: education
+generated: '2026-08-19'
+method: probed
+source: >-
+  Live HTTP probes of UC Berkeley-operated and Berkeley-tenant hosts on 2026-08-19,
+  plus inspection of public UC Berkeley GitHub organizations (ucberkeley,
+  BerkeleyLibrary, ets-berkeley-edu, berkeley-dsep-infra).
+created: '2026-08-19'
+modified: '2026-08-19'
+description: >-
+  Conformance of UC Berkeley's machine-readable surfaces against the Kin Score
+  `education` regulatory regime standards. REWARD-ONLY: only standards evidenced by a
+  fetched artifact or a live protocol response are recorded as confirmed. Berkeley
+  publishes no public OpenAPI, so no conformance is read from a contract document;
+  every confirmation below is read from the live protocol response itself.
+tags:
+- Education
+- Higher Education
+- University
+- Conformance
+- OAI-PMH
+- Shibboleth
+- SAML
+
+standards:
+
+- standard: oai-pmh
+  name: Open Archives Initiative Protocol for Metadata Harvesting 2.0
+  status: confirmed
+  operator: institution
+  confidence: high
+  evidence:
+    url: https://digicoll.lib.berkeley.edu/oai2d?verb=Identify
+    status: 200
+    location: OAI-PMH/Identify/protocolVersion
+    excerpt: >-
+      <repositoryName>Digital Collections</repositoryName>
+      <baseURL>https://digicoll.lib.berkeley.edu/oai2d</baseURL>
+      <protocolVersion>2.0</protocolVersion>
+      <adminEmail>digicoll@berkeley.edu</adminEmail>
+      <repositoryIdentifier>digicoll.lib.berkeley.edu</repositoryIdentifier>
+  notes: >-
+    Verified with an actual OAI-PMH verb, not by link presence. ListSets also responds
+    with named collection sets (fritz-metcalf, cityarts, calfaces, sugoroku, ...).
+    The endpoint is on Berkeley's own hostname with a berkeley.edu admin contact, but
+    digicoll.lib.berkeley.edu CNAMEs to berkeley.lb.service.tind.io, so the repository
+    software and contract are TIND's; the deployment and the metadata are Berkeley's.
+  secondary_evidence:
+  - url: https://escholarship.org/oai?verb=Identify
+    status: 200
+    note: >-
+      eScholarship OAI-PMH (repositoryIdentifier escholarship.org) is operated by the
+      California Digital Library for the whole UC system, not by Berkeley. Tenant, not
+      institution. Exposes a single set ("everything") -- there is no Berkeley-scoped set.
+
+- standard: shibboleth
+  name: Shibboleth IdP metadata (urn:mace:shibboleth:metadata:1.0)
+  status: confirmed
+  operator: institution
+  confidence: high
+  evidence:
+    url: https://shib.berkeley.edu/idp/shibboleth
+    status: 200
+    content_type: application/xml;charset=UTF-8
+    location: EntityDescriptor/IDPSSODescriptor/Extensions/shibmd:Scope
+    excerpt: >-
+      xmlns:shibmd="urn:mace:shibboleth:metadata:1.0" ...
+      <shibmd:Scope regexp="false">berkeley.edu</shibmd:Scope> ...
+      <SingleSignOnService Binding="urn:mace:shibboleth:1.0:profiles:AuthnRequest"
+      Location="https://shib.berkeley.edu/idp/profile/Shibboleth/SSO"/>
+  notes: >-
+    Operated by UC Berkeley IST-CalNet. shib.berkeley.edu CNAMEs to
+    shib.calnet.berkeley.edu / shib.calnet-aws.berkeley.edu -- Berkeley infrastructure
+    end to end. The signing certificate subject is O=UC Berkeley, OU=IST-Calnet,
+    CN=shib.berkeley.edu.
+
+- standard: saml
+  name: SAML 2.0 Metadata (urn:oasis:names:tc:SAML:2.0:metadata)
+  status: confirmed
+  operator: institution
+  confidence: high
+  evidence:
+    url: https://shib.berkeley.edu/idp/shibboleth
+    status: 200
+    location: EntityDescriptor@entityID + IDPSSODescriptor@protocolSupportEnumeration
+    excerpt: >-
+      <EntityDescriptor entityID="urn:mace:incommon:berkeley.edu"
+      xmlns="urn:oasis:names:tc:SAML:2.0:metadata"> ...
+      protocolSupportEnumeration="urn:mace:shibboleth:1.0
+      urn:oasis:names:tc:SAML:1.1:protocol urn:oasis:names:tc:SAML:2.0:protocol"
+  bindings:
+  - urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST
+  - urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect
+  - urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST-SimpleSign
+  - urn:oasis:names:tc:SAML:2.0:bindings:SOAP
+  notes: >-
+    Includes an AttributeAuthorityDescriptor with SAML1/SAML2 SOAP AttributeQuery
+    services on port 8443, and SingleLogoutService endpoints.
+  secondary_evidence:
+  - url: https://mdq.incommon.org/entities/urn%3Amace%3Aincommon%3Aberkeley.edu
+    status: 200
+    note: >-
+      InCommon MDQ returns a signed EntityDescriptor for entityID
+      urn:mace:incommon:berkeley.edu, confirming active federation membership.
+      The MDQ host is InCommon's; the entity is Berkeley's.
+
+- standard: lti
+  name: IMS Learning Tools Interoperability
+  status: historical
+  operator: institution
+  confidence: low
+  counted: false
+  evidence:
+    url: https://github.com/ets-berkeley-edu/squiggy
+    status: 200
+    location: repository description
+    excerpt: Asset Library and Engagement Index LTI tools for Canvas
+  notes: >-
+    Berkeley's Research, Teaching & Learning org authored LTI tool providers for its
+    Canvas (bCourses) deployment, but squiggy is ARCHIVED (last push 2025-09-09) and
+    its predecessor suitec has not been pushed since 2021-02-04. No live Berkeley-operated
+    LTI launch endpoint or tool configuration was found on a public host. Recorded as
+    historical and deliberately NOT counted as conformance.
+
+- standard: caliper
+  name: IMS Caliper Analytics
+  status: historical
+  operator: institution
+  confidence: low
+  counted: false
+  evidence:
+    url: https://github.com/ets-berkeley-edu/caliper-js
+    status: 200
+    location: repository listing
+  notes: >-
+    ets-berkeley-edu/caliper-js and ets-berkeley-edu/xapicaliper exist but were last
+    pushed in 2018 and 2017 respectively, with no descriptions and no live endpoint.
+    Recorded as historical, not counted.
+
+not_found:
+- standard: scim
+  probed: developers.api.berkeley.edu/apis (public catalog of 28 campus APIs)
+  note: No SCIM provisioning endpoint published; CalNet identity APIs are CalNet-gated.
+- standard: oneroster
+  note: No evidence found on any public Berkeley host.
+- standard: ed-fi
+  note: No evidence found; Ed-Fi is a K-12 standard and is not expected here.
+- standard: qti
+  note: No evidence found on any public Berkeley host.
+- standard: orcid
+  note: >-
+    No Berkeley-operated ORCID integration endpoint found. eScholarship carries ORCID
+    identifiers but is operated by the California Digital Library, not Berkeley.
+- standard: datacite
+  note: >-
+    DOIs for Berkeley scholarship are minted through the California Digital Library
+    (EZID/DataCite), a UC system service. Not a Berkeley-operated surface.
+- standard: crossref
+  note: No Berkeley-operated Crossref deposit or query surface found.

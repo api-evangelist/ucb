@@ -1,0 +1,148 @@
+specification: API Commons Authentication
+specificationVersion: '0.1'
+provider: University of California, Berkeley
+providerId: ucb
+generated: '2026-08-19'
+method: searched
+source: >-
+  https://developers.api.berkeley.edu/ , https://developers.api.berkeley.edu/apis ,
+  https://developers.api.berkeley.edu/terms_of_service ,
+  https://integration-services.berkeley.edu/api-management/api-gateway ,
+  https://shib.berkeley.edu/idp/shibboleth , https://mybrc.brc.berkeley.edu/api/
+created: '2026-08-19'
+modified: '2026-08-19'
+description: >-
+  How access is obtained to the surfaces UC Berkeley itself operates. Berkeley runs a
+  real, centrally governed API program, but it is an INTERNAL-FIRST program: the
+  catalog is public and the contracts are not. There is no self-service public API key
+  anywhere on the campus estate -- every credential path terminates in a CalNet
+  identity and a named Data Owner's approval.
+tags:
+- Education
+- Higher Education
+- University
+- Authentication
+- SAML
+- Shibboleth
+- CAS
+
+mechanisms:
+
+- name: CalNet CAS single sign-on (API Central portal)
+  type: sso
+  protocol: CAS
+  x-operator: institution
+  applies_to: https://developers.api.berkeley.edu/
+  evidence:
+    url: https://developers.api.berkeley.edu/
+    status: 200
+    excerpt: >-
+      <a class="istapi-btn-primary" rel="nofollow" data-method="post"
+      href="/auth/cas?url=https://developers.api.berkeley.edu/account">CalNet Login</a>
+  self_service: false
+  notes: >-
+    The portal's browse and search surface is readable WITHOUT login -- the API list,
+    each API's description, its data-classification rating and its Data Owner contact
+    are public. Credentials, access plans and interactive documentation are behind CAS.
+
+- name: CalNet Shibboleth / SAML 2.0 federated identity
+  type: federated_identity
+  protocol: SAML 2.0
+  x-operator: institution
+  entity_id: urn:mace:incommon:berkeley.edu
+  metadata_url: https://shib.berkeley.edu/idp/shibboleth
+  federation: InCommon (eduGAIN interfederation)
+  evidence:
+    url: https://shib.berkeley.edu/idp/shibboleth
+    status: 200
+    content_type: application/xml;charset=UTF-8
+  endpoints:
+    sso_post: https://shib.berkeley.edu/idp/profile/SAML2/POST/SSO
+    sso_redirect: https://shib.berkeley.edu/idp/profile/SAML2/Redirect/SSO
+    sso_post_simplesign: https://shib.berkeley.edu/idp/profile/SAML2/POST-SimpleSign/SSO
+    slo: https://shib.berkeley.edu/idp/logout
+    attribute_query_saml2: https://shib.berkeley.edu:8443/idp/profile/SAML2/SOAP/AttributeQuery
+  scope: berkeley.edu
+  self_service: false
+  notes: >-
+    This is the most consequential machine-readable artifact UC Berkeley publishes: a
+    complete, unauthenticated, machine-consumable description of how to federate with
+    the institution. It is institution-operated by definition and is the surface class
+    universities most reliably run and least reliably get catalogued for.
+
+- name: API Gateway credentials + access plan
+  type: api_key
+  x-operator: institution
+  applies_to: https://gateway.api.berkeley.edu/
+  self_service: false
+  approval_required: true
+  approver: Data Owner (via ServiceNow request)
+  evidence:
+  - url: https://gateway.api.berkeley.edu/
+    status: 200
+    excerpt: >-
+      It also centralizes functions common to all APIs, such load balancing,
+      authentication, authorization, and rate limiting.
+  - url: https://developers.api.berkeley.edu/terms_of_service
+    status: 200
+    excerpt: >-
+      API Central manages access to APIs through explicit plans. You must complete a
+      plan, and its appropriateness is your sole responsibility. An access plan adds an
+      additional layer of security on top of the security measures internal to [the API].
+  notes: >-
+    Every API page carries the line "Credentials are required to access this API"
+    together with a UC data-classification rating (P1/P2/P3, formerly DPL0/DPL1) and the
+    owning organization's email. Access is per-API and per-plan, not per-developer.
+
+- name: MyBRC session/token authentication
+  type: token
+  x-operator: institution
+  applies_to: https://mybrc.brc.berkeley.edu/api/
+  self_service: false
+  evidence:
+    url: https://mybrc.brc.berkeley.edu/api/
+    status: 401
+    content_type: application/json
+    body: '{"detail":"Authentication credentials were not provided."}'
+  notes: >-
+    A live, JSON-speaking, Django-REST-Framework-shaped API for the Berkeley Research
+    Computing cluster access management system. It answers with a well-formed 401 rather
+    than a login redirect, which is why it is recorded as an API surface and not a web
+    page. No public schema is served at /api/schema/ or /api/docs/ (both 404).
+
+- name: Anonymous read (no authentication)
+  type: none
+  x-operator: institution
+  applies_to:
+  - https://geodata.lib.berkeley.edu/catalog.json
+  - https://developers.api.berkeley.edu/apis
+  evidence:
+  - url: https://geodata.lib.berkeley.edu/catalog.json?q=water
+    status: 200
+    content_type: application/json; charset=utf-8
+    note: 5156 records returned across 516 pages, no credential presented.
+  notes: >-
+    The library's GeoData (GeoBlacklight) JSON interface is the only Berkeley-operated
+    API that returns institutional data to an anonymous caller.
+
+- name: Anonymous read (tenant surfaces)
+  type: none
+  x-operator: tenant
+  applies_to:
+  - https://digicoll.lib.berkeley.edu/oai2d
+  - https://escholarship.org/oai
+  notes: >-
+    Both OAI-PMH endpoints harvest without credentials. Neither contract is Berkeley's:
+    digicoll runs on TIND, eScholarship is a California Digital Library service for the
+    whole UC system.
+
+absent:
+- oauth2: >-
+    No OAuth 2.0 authorization server, no /.well-known/oauth-authorization-server and no
+    /.well-known/openid-configuration found on any public Berkeley API host.
+- self_service_signup: >-
+    developers.api.berkeley.edu/signup exists but issues a sponsored-guest CalNet
+    identity request, not an API key.
+- security_txt: >-
+    https://www.berkeley.edu/.well-known/security.txt returns 404. A security program
+    exists at https://security.berkeley.edu/ but is not machine-discoverable.
