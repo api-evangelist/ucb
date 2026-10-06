@@ -43,7 +43,7 @@ deliveryModel:
   method: derived
 specificationVersion: '0.23'
 created: '2026-06-03'
-modified: '2026-08-19'
+modified: '2026-10-06'
 accessModel:
   pricing: free
   onboarding: gated
@@ -315,6 +315,8 @@ apis:
         url: https://github.com/BerkeleyLibrary/alma
 
 common:
+  - url: https://news.berkeley.edu/feed/
+    type: BlogRSS
   - type: Website
     url: https://www.berkeley.edu/
   - type: DeveloperPortal
