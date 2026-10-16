@@ -2,14 +2,20 @@
   "repo": "ucb",
   "feeds": [
     {
-      "source": "https://integration-services.berkeley.edu/",
+      "source": "https://news.berkeley.edu/feed/",
+      "feed_url": "https://news.berkeley.edu/feed/",
+      "title": "",
+      "saved": 10,
+      "method": "feed"
+    },
+    {
+      "source": "https://integration-services.berkeley.edu/api-management",
       "feed_url": "https://integration-services.berkeley.edu/api-management",
-      "title": "UC Berkeley Integration Services / API Management",
+      "title": "",
       "saved": 0,
-      "method": "none",
-      "error": "parse_failed"
+      "method": "none"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-10-03T12:15:37Z"
+  "post_count": 10,
+  "fetched": "2026-10-10T13:15:00Z"
 }
