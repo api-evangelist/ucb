@@ -1,4 +1,4 @@
-# University of California, Berkeley (ucb)
+# University of California, Berkeley
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,108 +64,121 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-The University of California, Berkeley is a public land-grant research university and the founding
-campus of the University of California system. This repository catalogs Berkeley's public developer
-and API footprint as an [APIs.json](https://apisjson.org/) profile for the API Evangelist network.
+The University of California, Berkeley is a public land-grant research university and the founding campus of the University of California system. Berkeley is one of the few universities in this cohort that genuinely operates its own API program rather than merely appearing to: Berkeley IT's Engineering and Integration Services team runs an API Central developer portal and a shared API Gateway on Berkeley's own infrastructure, publishing a public catalog of roughly 28 campus APIs across Student Information, HR, finance and identity, each listed with its UC data classification (P1/P2/P3) and a named Data Owner. That program is real, but it is internal-first: the catalog is public and the contracts are not. No OpenAPI definition is retrievable without a CalNet identity and Data Owner approval, so this profile holds ZERO OpenAPI documents and that is the accurate measurement, not a gap in the research. What Berkeley does publish without credentials is narrower and mostly overlooked: a complete Shibboleth/SAML 2.0 identity provider metadata document at shib.berkeley.edu (InCommon entity urn:mace:incommon:berkeley.edu), a live GeoBlacklight JSON catalog of 5,156 geospatial datasets at geodata.lib.berkeley.edu, and a gated but well-formed research-computing API for the Savio cluster's access management system. Its research repositories are not its engineering: the Digital Collections OAI-PMH endpoint runs on TIND, and eScholarship is a California Digital Library service for the entire UC system. Both are recorded here as tenant relationships, not as Berkeley contracts.
 
-- APIs.json: https://raw.githubusercontent.com/api-evangelist/ucb/refs/heads/main/apis.yml
-- Run with Naftiko: https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=ucb-api-evangelist&utm_content=repo
+**Areas:** University · Higher Education · Education · Public Research University · United States · California · UC System · Research · Identity Federation · Research Repository · Research Computing · Course Catalog
 
-## Type
+## University of California, Berkeley on APIs.io
 
-- University / Public Research University / Index / Consumer / 3rd-Party
+Everything profiled for University of California, Berkeley is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ucb/](https://apis.io/providers/ucb/)** — or go straight to one of the APIs or properties below.
 
-## Who operates what
+### APIs (8)
 
-Every surface below carries an `x-operator` in `apis.yml`. A university is a federation of buyers,
-and most of what appears under an institution's name is a vendor's contract. Berkeley is an unusual
-case in this cohort: it genuinely runs its own API program.
+- [API Central (Developer Portal)](https://apis.io/apis/ucb/api-central/) — Berkeley IT's centralized API management developer portal, operated by the Engineering and Integration Services (EIS) team. The catalog itself is public: an…
+- [UC Berkeley API Gateway](https://apis.io/apis/ucb/api-gateway/) — The single centralized entry point for API requests across the Berkeley campus, operated by Berkeley IT on Berkeley's own CloudFront distribution. The…
+- [CalNet Shibboleth Identity Provider (SAML 2.0 Metadata)](https://apis.io/apis/ucb/calnet-shibboleth/) — UC Berkeley's Shibboleth identity provider, operated by IST-CalNet, publishes a complete unauthenticated SAML 2.0 metadata document describing how any…
+- [UC Berkeley Library GeoData (GeoBlacklight) Catalog API](https://apis.io/apis/ucb/geodata/) — The UC Berkeley Library's GIS and map discovery application, built and hosted by the Library itself (the application source is public at…
+- [MyBRC Cluster Access Management API](https://apis.io/apis/ucb/mybrc/) — Berkeley Research Computing's cluster access management system, which handles allocations, project membership and access requests for the Savio…
+- [UC Berkeley Digital Collections OAI-PMH (TIND tenant)](https://apis.io/apis/ucb/digicoll-oai/) — Berkeley's Digital Collections repository exposes a live OAI-PMH 2.0 interface, confirmed with an actual verb=Identify response reporting repositoryName…
+- [eScholarship Repository and OAI-PMH (California Digital Library tenant)](https://apis.io/apis/ucb/escholarship/) — eScholarship is the University of California's open-access publishing platform and institutional repository, operated system-wide by the California Digital…
+- [UC Library Search / Primo VE Discovery (Ex Libris tenant)](https://apis.io/apis/ucb/library-search/) — Library discovery for the Berkeley campus runs on Ex Libris Primo VE as part of the shared UC Library Search environment. search.library.berkeley.edu is a…
 
-### Institution-operated
+### Published properties
 
-- **API Central (Developer Portal)** — Berkeley IT / Engineering and Integration Services. The
-  catalog is public: ~28 campus APIs across Student Information, UCB Administration and integration
-  tooling, each with its UC data classification (P1/P2/P3) and a named Data Owner. Contracts are
-  CalNet-gated. https://developers.api.berkeley.edu/apis
-- **UC Berkeley API Gateway** — centralized entry point for campus API requests, handling load
-  balancing, authentication, authorization and rate limiting. https://gateway.api.berkeley.edu/
-- **CalNet Shibboleth Identity Provider (SAML 2.0 metadata)** — a complete, unauthenticated,
-  machine-readable federation description. entityID `urn:mace:incommon:berkeley.edu`, scope
-  `berkeley.edu`, SAML 1.1/2.0 with an AttributeAuthority. This is the largest machine-readable
-  artifact Berkeley publishes to an anonymous caller. https://shib.berkeley.edu/idp/shibboleth
-- **Library GeoData (GeoBlacklight) Catalog API** — 5,156 geospatial dataset records in
-  OpenGeoMetadata Aardvark fields, served as JSON with no credentials.
-  https://geodata.lib.berkeley.edu/catalog.json
-- **MyBRC Cluster Access Management API** — allocation and access management for the Savio HPC
-  cluster; answers with a JSON 401. https://mybrc.brc.berkeley.edu/api/
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-### Tenant relationships (Berkeley's data, someone else's contract)
+#### JSON-LD (1)
 
-- **Digital Collections OAI-PMH** — live OAI-PMH 2.0, admin `digicoll@berkeley.edu`, but the host
-  CNAMEs to `berkeley.lb.service.tind.io`. TIND's contract, Berkeley's collections.
-- **eScholarship** — operated system-wide by the California Digital Library, not by Berkeley. Its
-  OAI-PMH exposes a single set ("everything"); there is no Berkeley-scoped set.
-- **UC Library Search / Primo VE** — `search.library.berkeley.edu` CNAMEs to
-  `berkeley.primo.exlibrisgroup.com`. Berkeley is a view (`01UCS_BER:UCB`) inside a UC-wide Ex Libris
-  network zone, not the operator of its own Alma instance.
+Linked-data contexts for the provider's vocabulary.
 
-## What is deliberately absent
+- [Ucb Context](https://apis.io/jsonld/ucb/ucb-context/)
 
-Berkeley publishes **no public OpenAPI**. Every contract in API Central sits behind CalNet SSO plus
-Data Owner approval. This repository therefore holds zero OpenAPI, JSON Schema or example artifacts,
-and none were generated — generating them would credit Berkeley with contracts it has not published.
-See `x-coverage` in `apis.yml` for the full evidence table.
+#### Security (2)
 
-Berkeleytime (`berkeleytime.com`), the well-known student-built Berkeley course-data API, is live but
-runs on a non-institution domain under the ASUC student association. No evidence of University
-operation or endorsement was found, so it is not credited to Berkeley here.
+Authentication, trust centre, and vulnerability disclosure.
 
-## Education-regime conformance
+- [Ucb Authentication](https://apis.io/security/ucb/ucb-authentication/)
+- [Ucb Domain Security](https://apis.io/security/ucb/ucb-domain-security/)
 
-Verified by protocol response, not by link presence — see
-[conformance/ucb-education-standards-conformance.yml](conformance/ucb-education-standards-conformance.yml).
+#### Plans and pricing (1)
 
-| Standard | Status | Evidence |
-|---|---|---|
-| `oai-pmh` | confirmed | `digicoll.lib.berkeley.edu/oai2d?verb=Identify` → OAI-PMH 2.0 |
-| `shibboleth` | confirmed | `shibmd:Scope` extension in the CalNet IdP metadata |
-| `saml` | confirmed | SAML 2.0 `EntityDescriptor` / `IDPSSODescriptor` |
-| `lti` | historical, not counted | Berkeley-authored Canvas LTI tools, archived 2025 |
-| `caliper` | historical, not counted | `caliper-js` / `xapicaliper`, last pushed 2017–2018 |
+Published plans, tiers and prices.
 
-Not found: `scim`, `oneroster`, `ed-fi`, `qti`, `orcid`, `datacite`, `crossref`.
+- [Ucb Plans Pricing](https://apis.io/plans/ucb/ucb-plans-pricing/)
 
-## Artifacts
+#### Rate limits (1)
 
-- Authentication: [authentication/ucb-authentication.yml](authentication/ucb-authentication.yml)
-- Conformance: [conformance/ucb-education-standards-conformance.yml](conformance/ucb-education-standards-conformance.yml)
-- Domain Security: [security/ucb-domain-security.yml](security/ucb-domain-security.yml)
-- Plans / Pricing: [plans/ucb-plans-pricing.yml](plans/ucb-plans-pricing.yml)
-- Rate Limits: [rate-limits/ucb-rate-limits.yml](rate-limits/ucb-rate-limits.yml)
-- FinOps: [finops/ucb-finops.yml](finops/ucb-finops.yml)
+Published request limits.
 
-## Timestamps
+- [Ucb Rate Limits](https://apis.io/rate-limits/ucb/ucb-rate-limits/)
 
-- Created: 2026-06-03
-- Modified: 2026-08-19
+#### FinOps (1)
 
-## Common Properties
+What the API costs to run, by operation.
 
-- Website: https://www.berkeley.edu/
-- Developer Portal: https://developers.api.berkeley.edu/
-- API Reference: https://developers.api.berkeley.edu/apis
-- Terms of Service: https://developers.api.berkeley.edu/terms_of_service
-- Privacy Policy: https://www.berkeley.edu/privacy-policy/
-- Status: https://systemstatus.berkeley.edu/
-- Identity Federation: https://shib.berkeley.edu/idp/shibboleth
-- Open Data: https://geodata.lib.berkeley.edu/
-- Course Catalog: https://classes.berkeley.edu/
-- Research Computing: https://research-it.berkeley.edu/services-projects/high-performance-computing-savio
-- AI Policy: https://ai.berkeley.edu/guidance
-- AI Tooling: https://ai.berkeley.edu/tools-training
-- Security: https://security.berkeley.edu/
-- GitHub: https://github.com/ucberkeley / https://github.com/BerkeleyLibrary / https://github.com/ets-berkeley-edu
+- [Ucb Finops](https://apis.io/finops/ucb/ucb-finops/)
 
-## Maintainers
+## Where to find this API
 
-- Kin Lane — kin@apievangelist.com
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.berkeley.edu/)
+- [Documentation](https://integration-services.berkeley.edu/api-management/developer-portal-api-central)
+- [API reference](https://developers.api.berkeley.edu/apis)
+- [Support](https://developers.api.berkeley.edu/contact_us)
+- [Terms of service](https://developers.api.berkeley.edu/terms_of_service)
+- [Privacy policy](https://www.berkeley.edu/privacy-policy/)
+- [GitHub](https://github.com/ucberkeley)
+
+## API Evangelist rating
+
+**Kin Score 27.0** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 62.5 |
+| Contract quality | 14.3 |
+| Contract governance | 0.0 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 42.9 |
+| Access clarity | 26.3 |
+
+**Agent readiness 3.1** — human-only
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Education & Research
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ucb/](https://apis.io/providers/ucb/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for University of California, Berkeley: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ucb/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
